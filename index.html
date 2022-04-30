@@ -11,9 +11,7 @@
 </head>
 <body>
     
-</body>
-
-    <header class="jumbotron jumbotron-fluid custom-jumbotron">
+    <header>
         <div class="container text-center">
         <h1>Weather Dashboard</h1>
         </div>
@@ -21,7 +19,35 @@
 
     <main>
 
+        <aside>
+            <h1>Search for a city:</h1>
+            <form>
+                <input type="text" id="city" name="city" placeholder="San Diego"><br><br>
+                <button id="button">Search</button>
+            </form>
+        </aside>
+
+        <section class="currentCity">
+            <h3 class="cityName"></h3>
+            <h4 class="temp"></h4>
+            <h4 class="wind"></h4>
+            <h4 class="humidity"></h4>
+            <h4 class="uvindex"></h4>
+        </section>
+
+        <section>
+            <h3>5 Day Forecast:</h3>
+            <div id="weather-container"></div>
+            <div class="day1"></div>
+            <div class="day2"></div>
+            <div class="day3"></div>
+            <div class="day4"></div>
+            <div class="day5"></div>
+        </section>
+
     </main>
+
+</body>
 
     <script src="./assets/moment.js"></script>
     <script src="./assets/script.js"></script>
