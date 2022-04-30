@@ -4,23 +4,27 @@ var APIKey = "9a721b9d54b0807c9597675727d44009";
 var city = document.getElementById("#city");
 var button = document.querySelector("#button");
 var weatherContainer = document.querySelector('#weather-container');
+var cityE1 = document.querySelector('.cityName');
 
 
+// https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
 var citySubmission = function (event) {
   event.preventDefault();
 
   // remove spaces from the input
   // may have to clean up the input before sending into the API
-  var cityName = city.value.trim();
+  // var citySub = city.value.trim();
+  console.log(city);
+  cityE1.textContent = city;
 
-  if (cityName) {
-    getWeatherData(cityName);
+  // if (citySub) {
+  //   getWeatherData(citySub);
 
-    weatherContainer.textContent = '';
-    city.value = '';
-  } else {
-    alert('Emotional damage! Invalid city name input!');
-  }
+  //   weatherContainer.textContent = '';
+  //   city.value = '';
+  // } else {
+  //   alert('Emotional damage! Invalid city name input!');
+  // }
 };
 
 var getWeatherData = function (city, APIKey) {
@@ -51,21 +55,35 @@ var displayWeather = function (weather, searchTerm) {
     }
 }
 
-  // button.addEventListener("click", );
+
+button.addEventListener("click", citySubmission);
 
   // https://stackoverflow.com/questions/51851391/fetch-json-data-from-api-javascript
 
 
-var city = 'san diego';
-console.log(city);
-var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
-console.log(queryURL);
-fetch(queryURL)
-.then(function (response) {
-  return response.json();
-}).then(function (obj) {
-  console.log(obj);
-}).catch(function (error) {
-  console.error("something went wrong!");
-  console.error(error);
-});
+// var city = 'san diego';
+// console.log(city);
+// var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+// console.log(queryURL);
+// fetch(queryURL)
+// .then(function (response) {
+//   return response.json();
+// }).then(function (obj) {
+//   console.log(obj);
+// }).catch(function (error) {
+//   console.error("something went wrong!");
+//   console.error(error);
+// });
+
+
+
+/*
+1. get info when user enters in a city name.
+2. enable feature for when they press the enter key.
+3. print the city name to the webpage
+4. use the city name as input into the API
+5. print something from the API onto the screen
+6. print out the info I want from the API onto the screen
+7. add localstorage for the city name, so the data remains persistent
+8. 
+ */
