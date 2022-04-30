@@ -1,31 +1,28 @@
 var APIKey = "9a721b9d54b0807c9597675727d44009";
 // get input value of city form the user
 // print out the JSON file with the weather info
-var city = document.getElementById("#city");
-var button = document.querySelector("#button");
 var weatherContainer = document.querySelector('#weather-container');
 var cityE1 = document.querySelector('.cityName');
+var _locationInput = document.querySelector("#location");
+var submitButton = document.querySelector("#submit");
+
+submitButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  
+  // create user object from submission
+  var userInput = {
+    location: _locationInput.value.trim(),
+  };
+
+  // set new submission to local storage 
+  localStorage.setItem("userInput", JSON.stringify(userInput));
+  
+});
+
 
 
 // https://www.w3schools.com/howto/howto_js_trigger_button_enter.asp
-var citySubmission = function (event) {
-  event.preventDefault();
 
-  // remove spaces from the input
-  // may have to clean up the input before sending into the API
-  // var citySub = city.value.trim();
-  console.log(city);
-  cityE1.textContent = city;
-
-  // if (citySub) {
-  //   getWeatherData(citySub);
-
-  //   weatherContainer.textContent = '';
-  //   city.value = '';
-  // } else {
-  //   alert('Emotional damage! Invalid city name input!');
-  // }
-};
 
 var getWeatherData = function (city, APIKey) {
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
@@ -56,7 +53,6 @@ var displayWeather = function (weather, searchTerm) {
 }
 
 
-button.addEventListener("click", citySubmission);
 
   // https://stackoverflow.com/questions/51851391/fetch-json-data-from-api-javascript
 
