@@ -23,6 +23,7 @@ submitButton.addEventListener("click", function(event) {
 
 var getWeatherData = function (APIKey) {
     var city = locationInputEl.value.trim();
+    cityE1.textContent = city;
     console.log("city", city);
     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
 
