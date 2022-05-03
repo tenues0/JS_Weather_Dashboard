@@ -7,46 +7,8 @@ var locationInputEl = document.querySelector("#location");
 var submitButton = document.querySelector("#submit");
 
 
-submitButton.addEventListener("click", function(event) {
-  event.preventDefault();
-  // create user object from submission
-  var userInput = {
-    location: locationInputEl.value.trim(),
-  };
-  // set new submission to local storage 
-  localStorage.setItem('userInput', JSON.stringify(userInput));
-
-  // run the function to get the weather data
-  forecastWeatherData(APIKey);
-  // currentWeatherData(APIKey);
-});
-
-
-
-// var currentWeatherData = function (APIKey) {
-//   var city = locationInputEl.value.trim();
-//   // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-//   console.log("city", city);
-//   var queryURL = "http://api.openweathermap.org/data/2.5/onecall?q=" + city + "&exclude=minutely,hourly,daily,alerts" + "&appid=" + APIKey + "&units=imperial";
-
-//   fetch(queryURL)
-//   .then(function (response) {
-//     return response.json();
-//   }).then(function (obj) {
-//     console.log(obj);
-//     // displayCurrent(obj);
-//   }).catch(function (error) {
-//     console.error("something went wrong!");
-//     console.error(error);
-//   });
-// };
-
-
-
-
-
-
-
+var latCoordinate = 0;
+var lonCoordinate = 0;
 
 var forecastWeatherData = function (APIKey) {
     var city = locationInputEl.value.trim();
@@ -93,17 +55,68 @@ var displayForecast = function (obj) {
   divHumidity.innerHTML = humidity;
   humidityDiv.appendChild(divHumidity);
 
-  // var coordinates = obj.city.coord.lat;
-  // var coordDiv = document.getElementById("coords");
-  // var divCoord = document.createElement("h4");
-  // divCoord.innerHTML = coordinates;
-  // coordDiv.appendChild(divCoord);
+  var latCoordinate = obj.city.coord.lat;
+  console.log("lat coord ", latCoordinate);
+  var latCoord = document.getElementById("lat");
+  var coordLat = document.createElement("p");
+  coordLat.innerHTML = latCoordinate;
+  latCoord.appendChild(coordLat);
 
+  var lonCoordinate = obj.city.coord.lon;
+  console.log("lon coord ", lonCoordinate);
+  var lonCoord = document.getElementById("lon");
+  var coordLon = document.createElement("p");
+  coordLon.innerHTML = lonCoordinate;
+  lonCoord.appendChild(coordLon);
+
+  currentWeatherData(APIKey, latCoordinate, lonCoordinate);
 }
 
+var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
+  console.log("lat coord within onecall API ", latCoordinate);
+  console.log("lon coord within onecall API ", lonCoordinate);
+  var queryURL = "http://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=minutely,hourly,daily,alerts" + "&appid=" + APIKey + "&units=imperial";
+
+  fetch(queryURL)
+  .then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    console.log(data);
+    // displayCurrent(data);
+  }).catch(function (error) {
+    console.error("Emotional Damage! currentWeatherData failure!");
+    console.error(error);
+  });
+};
 
 
 
+var displayCurrent = function (data) {
+
+  var uvi = data.current.uvi;
+  var uviDiv = document.getElementById("uvindex");
+  var divUVI = document.createElement("h4");
+  divUVI.innerHTML = uvi;
+  uviDiv.appendChild(divUVI);
+};
+
+
+
+
+
+submitButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  // create user object from submission
+  var userInput = {
+    location: locationInputEl.value.trim(),
+  };
+  // set new submission to local storage 
+  localStorage.setItem('userInput', JSON.stringify(userInput));
+
+  // run the function to get the weather data
+  forecastWeatherData(APIKey);
+  
+});
 
 /*
 try using template literals
