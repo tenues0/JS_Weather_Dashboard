@@ -31,29 +31,13 @@ var forecastWeatherData = function (APIKey) {
 // https://w3collective.com/fetch-display-api-data-javascript/
 var displayForecast = function (obj) {
 
+  // Using the forecast API to get the city name and coordinates
+  // for the onecall API
   var name = obj.city.name;
   var nameDiv = document.getElementById("cityName");
   var divName = document.createElement("h4");
   divName.innerHTML = name;
   nameDiv.appendChild(divName);
-
-  // var temp = obj.list[0].main.temp;
-  // var tempDiv = document.getElementById("temp");
-  // var div = document.createElement("h4");
-  // div.innerHTML = temp;
-  // tempDiv.appendChild(div);
-
-  // var wind = obj.list[0].wind.speed;
-  // var windDiv = document.getElementById("wind");
-  // var divwind = document.createElement("h4");
-  // divwind.innerHTML = wind;
-  // windDiv.appendChild(divwind);
-
-  // var humidity = obj.list[0].main.humidity;
-  // var humidityDiv = document.getElementById("humidity");
-  // var divHumidity = document.createElement("h4");
-  // divHumidity.innerHTML = humidity;
-  // humidityDiv.appendChild(divHumidity);
 
   var latCoordinate = obj.city.coord.lat;
   console.log("lat coord ", latCoordinate);
@@ -69,7 +53,15 @@ var displayForecast = function (obj) {
   coordLon.innerHTML = lonCoordinate;
   lonCoord.appendChild(coordLon);
 
+  // sending the coordinates into the onecall API
   currentWeatherData(APIKey, latCoordinate, lonCoordinate);
+
+  var day1Date = new Date(1651644000 * 1000).toLocaleDateString("en-US");
+  console.log("the day1Date is ", day1Date);
+  var day1Div = document.getElementById("day1");
+  var divDay1 = document.createElement("p");
+  divDay1.innerHTML = day1Date;
+  day1Div.appendChild(divDay1);
 }
 
 var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
@@ -91,7 +83,7 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
 
 var displayCurrent = function (data) {
 
-  var dateToday = new Date(1651611941 * 1000).toLocaleDateString("en-US");
+  var dateToday = new Date(data.current.dt * 1000).toLocaleDateString("en-US");
   console.log("the date is ", dateToday);
   var dateDiv = document.getElementById("date");
   var divDate = document.createElement("p");
@@ -142,3 +134,11 @@ submitButton.addEventListener("click", function(event) {
   
 });
 
+/*
+Put 5-day forecast into the html
+
+localstorage for each day
+
+CSS styling
+
+*/
