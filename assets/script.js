@@ -11,12 +11,12 @@ var latCoordinate = 0;
 var lonCoordinate = 0;
 
 var forecastWeatherData = function (APIKey) {
-    var city = locationInputEl.value.trim();
-    // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-    console.log("city", city);
-    var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
+  var city = locationInputEl.value.trim();
+  // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
+  console.log("city", city);
+  var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
 
-    fetch(queryURL)
+  fetch(queryURL)
     .then(function (response) {
       return response.json();
     }).then(function (obj) {
@@ -56,7 +56,7 @@ var displayForecast = function (obj) {
   // sending the coordinates into the onecall API
   currentWeatherData(APIKey, latCoordinate, lonCoordinate);
 
-  var day1Date = new Date(1651644000 * 1000).toLocaleDateString("en-US");
+  var day1Date = new Date(obj.list[1].dt * 1000).toLocaleDateString("en-US");
   console.log("the day1Date is ", day1Date);
   var day1Div = document.getElementById("day1");
   var divDay1 = document.createElement("p");
@@ -70,15 +70,15 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
   var queryURL = "http://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=minutely,hourly,daily,alerts" + "&appid=" + APIKey + "&units=imperial";
 
   fetch(queryURL)
-  .then(function (response) {
-    return response.json();
-  }).then(function (data) {
-    console.log(data);
-    displayCurrent(data);
-  }).catch(function (error) {
-    console.error("Emotional Damage! currentWeatherData failure!");
-    console.error(error);
-  });
+    .then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      console.log(data);
+      displayCurrent(data);
+    }).catch(function (error) {
+      console.error("Emotional Damage! currentWeatherData failure!");
+      console.error(error);
+    });
 };
 
 var displayCurrent = function (data) {
@@ -117,27 +117,47 @@ var displayCurrent = function (data) {
 };
 
 
+var userInputHistory;
+
+  if (localStorage.getItem("userInputHistory")) {
+     userInputHistory = JSON.parse(localStorage.getItem("userInputHistory"));
+  }
+  else {
+     userInputHistory = [];
+  }
+console.log(typeof userInputHistory)
+console.log( userInputHistory)
 
 
-
-submitButton.addEventListener("click", function(event) {
+submitButton.addEventListener("click", function (event) {
   event.preventDefault();
   // create user object from submission
+
   var userInput = {
     location: locationInputEl.value.trim(),
   };
+  userInputHistory.push(userInput.location);
   // set new submission to local storage 
-  localStorage.setItem('userInput', JSON.stringify(userInput));
+  localStorage.setItem('userInputHistory', JSON.stringify(userInputHistory));
 
   // run the function to get the weather data
   forecastWeatherData(APIKey);
-  
+
 });
+
+
+
+
+
+
+
 
 /*
 Put 5-day forecast into the html
 
 localstorage for each day
+
+create buttons for each city searched
 
 CSS styling
 
