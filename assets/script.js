@@ -14,7 +14,7 @@ var forecastWeatherData = function (APIKey) {
   var city = locationInputEl.value.trim();
   // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
   console.log("city", city);
-  var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
+  var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
 
   fetch(queryURL)
     .then(function (response) {
@@ -67,7 +67,7 @@ var displayForecast = function (obj) {
 var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
   console.log("lat coord within onecall API ", latCoordinate);
   console.log("lon coord within onecall API ", lonCoordinate);
-  var queryURL = "http://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=minutely,hourly,daily,alerts" + "&appid=" + APIKey + "&units=imperial";
+  var queryURL = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=minutely,hourly,daily,alerts" + "&appid=" + APIKey + "&units=imperial";
 
   fetch(queryURL)
     .then(function (response) {
@@ -117,23 +117,24 @@ var displayCurrent = function (data) {
 };
 
 
+// trying to save the user history and create buttons
 var userInputHistory;
 
-  if (localStorage.getItem("userInputHistory")) {
-     userInputHistory = JSON.parse(localStorage.getItem("userInputHistory"));
-  } else {
-     userInputHistory = [];
-  };
-console.log(typeof userInputHistory)
-console.log( userInputHistory)
+//   if (localStorage.getItem("userInputHistory")) {
+//      userInputHistory = JSON.parse(localStorage.getItem("userInputHistory"));
+//   } else {
+//      userInputHistory = [];
+//   };
+// console.log(typeof userInputHistory)
+// console.log( userInputHistory)
 
-for (let i = 0; i < userInputHistory.length; i++) {
-  const button = document.createElement("button");
-  inputHistoryButton.append(button);
-  button.innerHTML = userInputHistory[i];
-  button.classList.add("button-history");
+// for (let i = 0; i < userInputHistory.length; i++) {
+//   const button = document.createElement("button");
+//   inputHistoryButton.append(button);
+//   button.innerHTML = userInputHistory[i];
+//   button.classList.add("button-history");
   
-}
+// }
 
 // var histBtn = $(".button-history")
 // histBtn.click(funciton(e){
@@ -246,12 +247,12 @@ submitButton.addEventListener("click", function (event) {
   event.preventDefault();
   // create user object from submission
 
-  var userInput = {
-    location: locationInputEl.value.trim(),
-  };
-  userInputHistory.push(userInput.location);
-  // set new submission to local storage 
-  localStorage.setItem('userInputHistory', JSON.stringify(userInputHistory));
+  // var userInput = {
+  //   location: locationInputEl.value.trim(),
+  // };
+  // // userInputHistory.push(userInput.location);
+  // // // set new submission to local storage 
+  // // localStorage.setItem('userInputHistory', JSON.stringify(userInputHistory));
 
   // run the function to get the weather data
   forecastWeatherData(APIKey);
