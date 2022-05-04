@@ -62,6 +62,13 @@ var displayForecast = function (obj) {
   var divDay1 = document.createElement("p");
   divDay1.innerHTML = day1Date;
   day1Div.appendChild(divDay1);
+
+  var day2Date = new Date(obj.list[2].dt * 1000).toLocaleDateString("en-US");
+  console.log("the day2Date is ", day2Date);
+  var day2Div = document.getElementById("day2");
+  var divDay2 = document.createElement("p");
+  divDay2.innerHTML = day2Date;
+  day2Div.appendChild(divDay2);
 }
 
 var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
