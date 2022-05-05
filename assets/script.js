@@ -102,6 +102,7 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
       return response.json();
     }).then(function (data) {
       console.log(data);
+      //
       displayCurrent(data);
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
@@ -190,6 +191,8 @@ submitButton.addEventListener("click", function (event) {
 
   // create user object from submission
 
+  //document.querySelector(".currentCity").innerHTML = "";
+
   var userInput = {
     location: locationInputEl.value.trim(),
   };
@@ -215,9 +218,13 @@ Problems:
 line 59
 
 2. when a new city is inputted it lays data over the old, the page does not reset.
-Need to find a way to clear out the old so when the new data publishes it remains on top.
+Need to find a way to clear out the old data so when the new data publishes it remains on top.
+ 
+look at giphy example
+
 
 3. history buttons only show up when the page is refreshed.
+
 
 todo list:
 Put 5-day forecast into the html
