@@ -22,88 +22,36 @@ var forecastWeatherData = function (APIKey) {
       return response.json();
     }).then(function (obj) {
       console.log(obj);
-      // displayForecast(obj);
+
       // https://stackoverflow.com/questions/55882966/how-to-use-json-array-with-template-literal
       document.getElementById("cityName").innerHTML = `${obj.city.name}`;
-      document.getElementById("lat").innerHTML = `${obj.city.coord.lat}`;
-      document.getElementById("lon").innerHTML = `${obj.city.coord.lon}`;
+      document.getElementById("lat").innerHTML = `Latitude ${obj.city.coord.lat}`;
+      document.getElementById("lon").innerHTML = `Longitude ${obj.city.coord.lon}`;
 
       // getting the Lat and Lon coords and sending them into currentWeatherData function
       var latCoordinate = obj.city.coord.lat;
       var lonCoordinate = obj.city.coord.lon;
       currentWeatherData(APIKey, latCoordinate, lonCoordinate);
 
+      var template = "";
+      obj.list.forEach(function (datum, i) {
+        template +=`
+          <div key=${i}>
+            <p>${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
+            <p>${datum.main.temp}</p>
+            <p>${datum.wind.speed}</p>
+            <p>${datum.main.humidity}</p>
+          </div>
+        `;
+      });
+
+      document.querySelector(".day1").innerHTML = template;
+
     }).catch(function (error) {
       console.error("something went wrong!");
       console.error(error);
     });
 };
-
-
-// https://w3collective.com/fetch-display-api-data-javascript/
-var displayForecast = function (obj) {
-
-  // Using the forecast API to get the city name and coordinates
-  // for the onecall API
-
-  // var name = obj.city.name;
-  // var nameDiv = document.getElementById("cityName");
-  // var divName = document.createElement("h4");
-  // divName.innerHTML = name;
-  // nameDiv.appendChild(divName);
-
-  // var latCoordinate = obj.city.coord.lat;
-  // console.log("lat coord ", latCoordinate);
-  // var latCoord = document.getElementById("lat");
-  // var coordLat = document.createElement("p");
-  // coordLat.innerHTML = latCoordinate;
-  // latCoord.appendChild(coordLat);
-
-  // var lonCoordinate = obj.city.coord.lon;
-  // console.log("lon coord ", lonCoordinate);
-  // var lonCoord = document.getElementById("lon");
-  // var coordLon = document.createElement("p");
-  // coordLon.innerHTML = lonCoordinate;
-  // lonCoord.appendChild(coordLon);
-
-  // sending the lat and lon coordinates into the onecall API function
-  currentWeatherData(APIKey, latCoordinate, lonCoordinate);
-
-  var day1Date = new Date(obj.list[1].dt * 1000).toLocaleDateString("en-US");
-  console.log("the day1Date is ", day1Date);
-  var day1Div = document.getElementById("day1");
-  var divDay1 = document.createElement("p");
-  divDay1.innerHTML = day1Date;
-  day1Div.appendChild(divDay1);
-
-  var day1Temp = obj.list[1].main.temp;
-  console.log("day1Temp ", day1Temp);
-  var temp1Div = document.getElementById("day1");
-  var divTemp1 = document.createElement("p");
-  divTemp1.innerHTML = day1Temp;
-  temp1Div.appendChild(divTemp1);
-
-  var day1Wind = obj.list[1].wind.speed;
-  console.log("day1Wind ", day1Wind);
-  var wind1Div = document.getElementById("day1");
-  var divWind1 = document.createElement("p");
-  divWind1.innerHTML = day1Wind;
-  wind1Div.appendChild(divWind1);
-
-  var day1Hum = obj.list[1].main.humidity;
-  console.log("day1Hum ", day1Hum);
-  var hum1Div = document.getElementById("day1");
-  var divHum1 = document.createElement("p");
-  divHum1.innerHTML = day1Hum;
-  hum1Div.appendChild(divHum1);
-
-  // var day2Date = new Date(obj.list[2].dt * 1000).toLocaleDateString("en-US");
-  // console.log("the day2Date is ", day2Date);
-  // var day2Div = document.getElementById("day2");
-  // var divDay2 = document.createElement("p");
-  // divDay2.innerHTML = day2Date;
-  // day2Div.appendChild(divDay2);
-}
 
 var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
   console.log("lat coord within onecall API ", latCoordinate);
@@ -118,10 +66,10 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
 
       // Using template literals to display data from JSON
       document.getElementById("date").innerHTML = `${new Date(data.current.dt * 1000).toLocaleDateString("en-US")}`;
-      document.getElementById("temp").innerHTML = `${data.current.temp}`;
-      document.getElementById("wind").innerHTML = `${data.current.wind_speed}`;
-      document.getElementById("humidity").innerHTML = `${data.current.humidity}`;
-      document.getElementById("uvindex").innerHTML = `${data.current.uvi}`;
+      document.getElementById("temp").innerHTML = `Temp: ${data.current.temp} F`;
+      document.getElementById("wind").innerHTML = `Wind: ${data.current.wind_speed} MPH`;
+      document.getElementById("humidity").innerHTML = `Humidity: ${data.current.humidity} %`;
+      document.getElementById("uvindex").innerHTML = `UV Index ${data.current.uvi}`;
 
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
@@ -208,9 +156,6 @@ Problems:
 1. the date from the forecast API call is off
 line 59
 
-2. when a new city is inputted it lays data over the old, the page does not reset.
-Need to find a way to clear out the old data so when the new data publishes it remains on top.
- 
 look at giphy example
 
 
@@ -221,8 +166,9 @@ todo list:
 1. review giphy example and use the template literals to
 generate the output. that might get ridof some of the 
 other problems.
+--- it did!!!!!!!!
 
-Put 5-day forecast into the html
+Put 5-day forecast into the html using template literals
 
 localstorage for each day
 
