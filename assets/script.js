@@ -37,15 +37,15 @@ var forecastWeatherData = function (APIKey) {
       obj.list.forEach(function (datum, i) {
         template +=`
           <div key=${i}>
-            <p>${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
-            <p>${datum.main.temp}</p>
-            <p>${datum.wind.speed}</p>
-            <p>${datum.main.humidity}</p>
+            <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+            <p>Temp: ${datum.main.temp} F</p>
+            <p>Wind: ${datum.wind.speed} MPH</p>
+            <p>Humidity: ${datum.main.humidity} %</p>
           </div>
         `;
       });
 
-      document.querySelector(".day1").innerHTML = template;
+      document.querySelector(".weather-container").innerHTML = template;
 
     }).catch(function (error) {
       console.error("something went wrong!");
