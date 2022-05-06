@@ -32,6 +32,8 @@ var forecastWeatherData = function (APIKey) {
       var latCoordinate = obj.city.coord.lat;
       var lonCoordinate = obj.city.coord.lon;
       currentWeatherData(APIKey, latCoordinate, lonCoordinate);
+      fiveDayForecast(APIKey, latCoordinate, lonCoordinate);
+      
 
       var template = "";
       obj.list.forEach(function (datum, i) {
@@ -78,6 +80,42 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
 };
 
 
+var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
+  console.log("lat coord within onecall API ", latCoordinate);
+  console.log("lon coord within onecall API ", lonCoordinate);
+  var queryURL = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=current,minutely,hourly,alerts" + "&appid=" + APIKey + "&units=imperial";
+
+  fetch(queryURL)
+  .then(function (response) {
+    return response.json();
+  }).then(function (five) {
+    console.log("The five day forecast from onecall");
+    console.log(five);
+
+    // Using template literals to display data from JSON
+    // output the daily forecast
+
+    var template = "";
+    five.daily.forEach(function (datum, i) {
+      template +=`
+        <div key=${i}>
+          <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+          <p>Temp: ${datum.temp.day} F</p>
+          <p>Wind: ${datum.wind_speed} MPH</p>
+          <p>Humidity: ${datum.humidity} %</p>
+        </div>
+      `;
+    });
+
+    document.querySelector(".forecast-weather-container").innerHTML = template;
+
+    // forecast-weather-container
+
+  }).catch(function (error) {
+    console.error("Emotional Damage! fiveDayForecast failure!");
+    console.error(error);
+  });
+};
 
 
 
