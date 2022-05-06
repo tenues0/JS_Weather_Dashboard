@@ -22,39 +22,51 @@ var forecastWeatherData = function (APIKey) {
       return response.json();
     }).then(function (obj) {
       console.log(obj);
-      displayForecast(obj);
+      // displayForecast(obj);
+      // https://stackoverflow.com/questions/55882966/how-to-use-json-array-with-template-literal
+      document.getElementById("cityName").innerHTML = `${obj.city.name}`;
+      document.getElementById("lat").innerHTML = `${obj.city.coord.lat}`;
+      document.getElementById("lon").innerHTML = `${obj.city.coord.lon}`;
+
+      // getting the Lat and Lon coords and sending them into currentWeatherData function
+      var latCoordinate = obj.city.coord.lat;
+      var lonCoordinate = obj.city.coord.lon;
+      currentWeatherData(APIKey, latCoordinate, lonCoordinate);
+
     }).catch(function (error) {
       console.error("something went wrong!");
       console.error(error);
     });
 };
 
+
 // https://w3collective.com/fetch-display-api-data-javascript/
 var displayForecast = function (obj) {
 
   // Using the forecast API to get the city name and coordinates
   // for the onecall API
-  var name = obj.city.name;
-  var nameDiv = document.getElementById("cityName");
-  var divName = document.createElement("h4");
-  divName.innerHTML = name;
-  nameDiv.appendChild(divName);
 
-  var latCoordinate = obj.city.coord.lat;
-  console.log("lat coord ", latCoordinate);
-  var latCoord = document.getElementById("lat");
-  var coordLat = document.createElement("p");
-  coordLat.innerHTML = latCoordinate;
-  latCoord.appendChild(coordLat);
+  // var name = obj.city.name;
+  // var nameDiv = document.getElementById("cityName");
+  // var divName = document.createElement("h4");
+  // divName.innerHTML = name;
+  // nameDiv.appendChild(divName);
 
-  var lonCoordinate = obj.city.coord.lon;
-  console.log("lon coord ", lonCoordinate);
-  var lonCoord = document.getElementById("lon");
-  var coordLon = document.createElement("p");
-  coordLon.innerHTML = lonCoordinate;
-  lonCoord.appendChild(coordLon);
+  // var latCoordinate = obj.city.coord.lat;
+  // console.log("lat coord ", latCoordinate);
+  // var latCoord = document.getElementById("lat");
+  // var coordLat = document.createElement("p");
+  // coordLat.innerHTML = latCoordinate;
+  // latCoord.appendChild(coordLat);
 
-  // sending the coordinates into the onecall API
+  // var lonCoordinate = obj.city.coord.lon;
+  // console.log("lon coord ", lonCoordinate);
+  // var lonCoord = document.getElementById("lon");
+  // var coordLon = document.createElement("p");
+  // coordLon.innerHTML = lonCoordinate;
+  // lonCoord.appendChild(coordLon);
+
+  // sending the lat and lon coordinates into the onecall API function
   currentWeatherData(APIKey, latCoordinate, lonCoordinate);
 
   var day1Date = new Date(obj.list[1].dt * 1000).toLocaleDateString("en-US");
@@ -103,53 +115,22 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
       return response.json();
     }).then(function (data) {
       console.log(data);
-      // function to clear previous city current forecast
-      // clearData(currentCityEl)
-      displayCurrent(data);
+
+      // Using template literals to display data from JSON
+      document.getElementById("date").innerHTML = `${new Date(data.current.dt * 1000).toLocaleDateString("en-US")}`;
+      document.getElementById("temp").innerHTML = `${data.current.temp}`;
+      document.getElementById("wind").innerHTML = `${data.current.wind_speed}`;
+      document.getElementById("humidity").innerHTML = `${data.current.humidity}`;
+      document.getElementById("uvindex").innerHTML = `${data.current.uvi}`;
+
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
       console.error(error);
     });
 };
 
-function clearData(currentCityEl) {
-  document.querySelector(currentCityEl).innerHTML = "";
-};
 
-var displayCurrent = function (data) {
 
-  var dateToday = new Date(data.current.dt * 1000).toLocaleDateString("en-US");
-  console.log("dateToday ", dateToday);
-  var dateDiv = document.getElementById("date");
-  var divDate = document.createElement("p");
-  divDate.innerHTML = dateToday;
-  dateDiv.appendChild(divDate);
-
-  var temp = data.current.temp;
-  var tempDiv = document.getElementById("temp");
-  var div = document.createElement("p");
-  div.innerHTML = temp;
-  tempDiv.appendChild(div);
-
-  var wind = data.current.wind_speed;
-  var windDiv = document.getElementById("wind");
-  var divwind = document.createElement("p");
-  divwind.innerHTML = wind;
-  windDiv.appendChild(divwind);
-
-  var humidity = data.current.humidity;
-  var humidityDiv = document.getElementById("humidity");
-  var divHumidity = document.createElement("p");
-  divHumidity.innerHTML = humidity;
-  humidityDiv.appendChild(divHumidity);
-
-  var uviIndex = data.current.uvi;
-  var uviDiv = document.getElementById("uvindex");
-  var divUVI = document.createElement("p");
-  divUVI.innerHTML = uviIndex;
-  uviDiv.appendChild(divUVI);
-
-};
 
 
 // trying to save the user history and create buttons
@@ -190,6 +171,10 @@ for (let i = 0; i < userInputHistory.length; i++) {
 //       console.error(error);
 //     });
 // };
+
+
+
+document.querySelector("#submit").addEventListener("change", forecastWeatherData);
 
 
 submitButton.addEventListener("click", function (event) {
