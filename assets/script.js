@@ -6,6 +6,7 @@ var cityE1 = document.querySelector('#cityName');
 var locationInputEl = document.querySelector("#location");
 var submitButton = document.querySelector("#submit");
 var inputHistoryButton = document.querySelector("#inputHistory");
+var currentCityEl = document.getElementsByClassName(".currentCity");
 
 var latCoordinate = 0;
 var lonCoordinate = 0;
@@ -102,12 +103,17 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
       return response.json();
     }).then(function (data) {
       console.log(data);
-      //
+      // function to clear previous city current forecast
+      // clearData(currentCityEl)
       displayCurrent(data);
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
       console.error(error);
     });
+};
+
+function clearData(currentCityEl) {
+  document.querySelector(currentCityEl).innerHTML = "";
 };
 
 var displayCurrent = function (data) {
@@ -227,6 +233,10 @@ look at giphy example
 
 
 todo list:
+1. review giphy example and use the template literals to
+generate the output. that might get ridof some of the 
+other problems.
+
 Put 5-day forecast into the html
 
 localstorage for each day
@@ -234,7 +244,5 @@ localstorage for each day
 create buttons for each city searched
 
 learn about putting icons in
-
-CSS styling
 
 */
