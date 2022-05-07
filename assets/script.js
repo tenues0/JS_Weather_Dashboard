@@ -1,4 +1,5 @@
 var APIKey = "9a721b9d54b0807c9597675727d44009";
+var APIKeyAgain = "9a721b9d54b0807c9597675727d44009";
 // get input value of city form the user
 // print out the JSON file with the weather info
 var weatherContainer = document.querySelector('#weather-container');
@@ -8,13 +9,15 @@ var submitButton = document.querySelector("#submit");
 var inputHistoryButton = document.querySelector("#inputHistory");
 var currentCityEl = document.getElementsByClassName(".currentCity");
 
+var cityButton = "";
+
 var latCoordinate = 0;
 var lonCoordinate = 0;
 
 var forecastWeatherData = function (APIKey) {
   var city = locationInputEl.value.trim();
-  // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-  console.log("city", city);
+  console.log("city from first function", city);
+  console.log(typeof city);
   var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
 
   fetch(queryURL)
@@ -119,18 +122,16 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
 
 // copy pasta
 // ------------------------------------------------------------------
-var forecastWeatherDataHistBtn = function (APIKey) {
-  var city = this.innerHTML.trim();
-  // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-  console.log("city", city);
-  console.log(typeof city);
-  var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
+var forecastWeatherDataHistBtn = function (cityButton, APIKeyAgain) {
+  // var city = this.innerText;
+  // // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
+  // console.log("city", city);
+  // console.log(typeof city);
+  var newQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityButton + "&appid=" + APIKeyAgain + "&units=imperial";
 
-  fetch(queryURL)
-    .then(function (res) {
-      return res.json();
-    }).then(function (object) {
-      console.log(object);
+  fetch(newQueryURL).then(function (res) {return res.json()}).then(function (object) {
+      
+    console.log(object);
 
       // https://stackoverflow.com/questions/55882966/how-to-use-json-array-with-template-literal
       document.getElementById("cityName").innerHTML = `${object.city.name}`;
@@ -234,8 +235,8 @@ var userInputHistory;
   } else {
      userInputHistory = [];
   };
-console.log(typeof userInputHistory)
-console.log(userInputHistory)
+// console.log(typeof userInputHistory)
+// console.log(userInputHistory)
 
 for (let i = 0; i < userInputHistory.length; i++) {
   const button = document.createElement("button");
@@ -245,30 +246,17 @@ for (let i = 0; i < userInputHistory.length; i++) {
   
 }
 
-// var histBtn = $(".button-history")
-// histBtn.click(function(e){
-// e.preventDefault()
-//     var city = $(this).val().trim();
-//   // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-//   console.log("city", city);
-//   var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
-
-//   fetch(queryURL)
-//     .then(function (response) {
-//       return response.json();
-//     }).then(function (obj) {
-//       console.log(obj);
-//       displayForecast(obj);
-//     }).catch(function (error) {
-//       console.error("something went wrong!");
-//       console.error(error);
-//     });
-// };
-
-$(".button-history").click(forecastWeatherDataHistBtn);
+var histBtn = $(".button-history")
+console.log(histBtn);
+histBtn.click(function (event) {
+  event.preventDefault()
+  var cityButton = this.innerText;
+  console.log("cityButton", cityButton)
+  forecastWeatherDataHistBtn(cityButton);
+});
 
 document.querySelector("#submit").addEventListener("change", forecastWeatherData);
-
+// document.querySelector(".button-history").addEventListener("click", forecastWeatherDataHistBtn);
 
 submitButton.addEventListener("click", function (event) {
   event.preventDefault();
@@ -305,19 +293,13 @@ look at giphy example
 
 
 3. history buttons only show up when the page is refreshed.
+can probably use template literals to make them show up.
 
 
 todo list:
-1. review giphy example and use the template literals to
-generate the output. that might get ridof some of the 
-other problems.
---- it did!!!!!!!!
 
-Put 5-day forecast into the html using template literals
 
 localstorage for each day
-
-create buttons for each city searched
 
 learn about putting icons in
 
