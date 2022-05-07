@@ -127,7 +127,7 @@ var forecastWeatherDataHistBtn = function (cityButton, APIKeyAgain) {
   // // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
   // console.log("city", city);
   // console.log(typeof city);
-  var newQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityButton + "&appid=" + APIKeyAgain + "&units=imperial";
+  var newQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityButton + "&appid=" + "9a721b9d54b0807c9597675727d44009" + "&units=imperial";
 
   fetch(newQueryURL).then(function (res) {return res.json()}).then(function (object) {
       
@@ -227,11 +227,12 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
   });
 };
 
-// trying to save the user history and create buttons
+// save the user history and create buttons
 var userInputHistory;
 
   if (localStorage.getItem("userInputHistory")) {
      userInputHistory = JSON.parse(localStorage.getItem("userInputHistory"));
+     
   } else {
      userInputHistory = [];
   };
