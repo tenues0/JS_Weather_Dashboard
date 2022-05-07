@@ -97,7 +97,6 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
 
     // Using template literals to display data from JSON
     // output the daily forecast
-
     var template = "";
     five.daily.forEach(function (datum, i) {
       template +=`
@@ -112,8 +111,6 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
 
     document.querySelector(".forecast-weather-container").innerHTML = template;
 
-    // forecast-weather-container
-
   }).catch(function (error) {
     console.error("Emotional Damage! fiveDayForecast failure!");
     console.error(error);
@@ -122,11 +119,7 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
 
 // copy pasta
 // ------------------------------------------------------------------
-var forecastWeatherDataHistBtn = function (cityButton, APIKeyAgain) {
-  // var city = this.innerText;
-  // // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
-  // console.log("city", city);
-  // console.log(typeof city);
+var forecastWeatherDataHistBtn = function (cityButton) {
   var newQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityButton + "&appid=" + "9a721b9d54b0807c9597675727d44009" + "&units=imperial";
 
   fetch(newQueryURL).then(function (res) {return res.json()}).then(function (object) {
@@ -204,7 +197,6 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
 
     // Using template literals to display data from JSON
     // output the daily forecast
-
     var template = "";
     five.daily.forEach(function (datum, i) {
       template +=`
@@ -219,8 +211,6 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
 
     document.querySelector(".forecast-weather-container").innerHTML = template;
 
-    // forecast-weather-container
-
   }).catch(function (error) {
     console.error("Emotional Damage! fiveDayForecast failure!");
     console.error(error);
@@ -229,22 +219,18 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
 
 // save the user history and create buttons
 var userInputHistory;
-
   if (localStorage.getItem("userInputHistory")) {
      userInputHistory = JSON.parse(localStorage.getItem("userInputHistory"));
-     
   } else {
      userInputHistory = [];
   };
-// console.log(typeof userInputHistory)
-// console.log(userInputHistory)
+
 
 for (let i = 0; i < userInputHistory.length; i++) {
-  const button = document.createElement("button");
+  var button = document.createElement("button");
   inputHistoryButton.append(button);
   button.innerHTML = userInputHistory[i];
   button.classList.add("button-history");
-  
 }
 
 var histBtn = $(".button-history")
@@ -257,14 +243,9 @@ histBtn.click(function (event) {
 });
 
 document.querySelector("#submit").addEventListener("change", forecastWeatherData);
-// document.querySelector(".button-history").addEventListener("click", forecastWeatherDataHistBtn);
 
 submitButton.addEventListener("click", function (event) {
   event.preventDefault();
-
-  // create user object from submission
-
-  //document.querySelector(".currentCity").innerHTML = "";
 
   var userInput = {
     location: locationInputEl.value.trim(),
@@ -277,31 +258,3 @@ submitButton.addEventListener("click", function (event) {
   forecastWeatherData(APIKey);
 
 });
-
-
-
-
-
-
-
-
-/*
-Problems:
-1. the date from the forecast API call is off
-line 59
-
-look at giphy example
-
-
-3. history buttons only show up when the page is refreshed.
-can probably use template literals to make them show up.
-
-
-todo list:
-
-
-localstorage for each day
-
-learn about putting icons in
-
-*/
