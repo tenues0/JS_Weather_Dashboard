@@ -117,7 +117,114 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
   });
 };
 
+// copy pasta
+// ------------------------------------------------------------------
+var forecastWeatherDataHistBtn = function (APIKey) {
+  var city = this.innerHTML.trim();
+  // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
+  console.log("city", city);
+  console.log(typeof city);
+  var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&units=imperial";
 
+  fetch(queryURL)
+    .then(function (res) {
+      return res.json();
+    }).then(function (object) {
+      console.log(object);
+
+      // https://stackoverflow.com/questions/55882966/how-to-use-json-array-with-template-literal
+      document.getElementById("cityName").innerHTML = `${object.city.name}`;
+      document.getElementById("lat").innerHTML = `Latitude ${object.city.coord.lat}`;
+      document.getElementById("lon").innerHTML = `Longitude ${object.city.coord.lon}`;
+
+      // getting the Lat and Lon coords and sending them into currentWeatherData function
+      var latCoordinate = object.city.coord.lat;
+      var lonCoordinate = object.city.coord.lon;
+      currentWeatherDataHistBtn(APIKey, latCoordinate, lonCoordinate);
+      fiveDayForecastHistBtn(APIKey, latCoordinate, lonCoordinate);
+      
+
+      var template = "";
+      object.list.forEach(function (datum, i) {
+        template +=`
+          <div key=${i}>
+            <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+            <p>Temp: ${datum.main.temp} F</p>
+            <p>Wind: ${datum.wind.speed} MPH</p>
+            <p>Humidity: ${datum.main.humidity} %</p>
+          </div>
+        `;
+      });
+
+      document.querySelector(".weather-container").innerHTML = template;
+
+    }).catch(function (error) {
+      console.error("something went wrong!");
+      console.error(error);
+    });
+};
+
+var currentWeatherDataHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
+  console.log("lat coord within onecall API ", latCoordinate);
+  console.log("lon coord within onecall API ", lonCoordinate);
+  var queryURL = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=minutely,hourly,daily,alerts" + "&appid=" + APIKey + "&units=imperial";
+
+  fetch(queryURL)
+    .then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      console.log(data);
+
+      // Using template literals to display data from JSON
+      document.getElementById("date").innerHTML = `${new Date(data.current.dt * 1000).toLocaleDateString("en-US")}`;
+      document.getElementById("temp").innerHTML = `Temp: ${data.current.temp} F`;
+      document.getElementById("wind").innerHTML = `Wind: ${data.current.wind_speed} MPH`;
+      document.getElementById("humidity").innerHTML = `Humidity: ${data.current.humidity} %`;
+      document.getElementById("uvindex").innerHTML = `UV Index ${data.current.uvi}`;
+
+    }).catch(function (error) {
+      console.error("Emotional Damage! currentWeatherDataHistBtn failure!");
+      console.error(error);
+    });
+};
+
+
+var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
+  console.log("lat coord within onecall API ", latCoordinate);
+  console.log("lon coord within onecall API ", lonCoordinate);
+  var queryURL = "https://api.openweathermap.org/data/2.5/onecall?" + "lat=" + latCoordinate + "&lon=" + lonCoordinate + "&exclude=current,minutely,hourly,alerts" + "&appid=" + APIKey + "&units=imperial";
+
+  fetch(queryURL)
+  .then(function (response) {
+    return response.json();
+  }).then(function (five) {
+    console.log("The five day forecast from onecall");
+    console.log(five);
+
+    // Using template literals to display data from JSON
+    // output the daily forecast
+
+    var template = "";
+    five.daily.forEach(function (datum, i) {
+      template +=`
+        <div key=${i}>
+          <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+          <p>Temp: ${datum.temp.day} F</p>
+          <p>Wind: ${datum.wind_speed} MPH</p>
+          <p>Humidity: ${datum.humidity} %</p>
+        </div>
+      `;
+    });
+
+    document.querySelector(".forecast-weather-container").innerHTML = template;
+
+    // forecast-weather-container
+
+  }).catch(function (error) {
+    console.error("Emotional Damage! fiveDayForecast failure!");
+    console.error(error);
+  });
+};
 
 // trying to save the user history and create buttons
 var userInputHistory;
@@ -128,7 +235,7 @@ var userInputHistory;
      userInputHistory = [];
   };
 console.log(typeof userInputHistory)
-console.log( userInputHistory)
+console.log(userInputHistory)
 
 for (let i = 0; i < userInputHistory.length; i++) {
   const button = document.createElement("button");
@@ -139,7 +246,7 @@ for (let i = 0; i < userInputHistory.length; i++) {
 }
 
 // var histBtn = $(".button-history")
-// histBtn.click(funciton(e){
+// histBtn.click(function(e){
 // e.preventDefault()
 //     var city = $(this).val().trim();
 //   // cityE1.textContent = city.charAt(0).toUpperCase() + city.slice(1);
@@ -158,7 +265,7 @@ for (let i = 0; i < userInputHistory.length; i++) {
 //     });
 // };
 
-
+$(".button-history").click(forecastWeatherDataHistBtn);
 
 document.querySelector("#submit").addEventListener("change", forecastWeatherData);
 
