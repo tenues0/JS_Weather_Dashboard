@@ -19,21 +19,19 @@
 
     <main>
         
-        <aside>
-        <div class="clearfix">
-            <div class="card">
+        <section class="card">
             <h1>Search for a city:</h1>
                 <form method="POST">
-                <div class="input-group">
-                    <label for="location">Location</label>
-                    <input type="text" name="location" id="location" placeholder="San Diego" />
-                </div>
-                <button id="submit">Submit</button>
-                <button id="inputHistory"></button>
+                    <div class="input-group">
+                        <!-- <label for="location">Location</label> -->
+                        <input type="text" name="location" id="location" placeholder="San Diego" />
+                    </div>
+                    <div class="btn-group-vertical">
+                        <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+                        <button type="button" class="btn btn-secondary" id="inputHistory"></button>
+                    </div>
                 </form>
-            </div>
-            </div>
-        </aside>
+        </section>
 
         <section class="currentCity">
             <div id="cityName"></div>
@@ -46,11 +44,14 @@
             <div id="lon"></div>
         </section>
 
-        <section>
-            <h3>3 Hour 5 Day Forecast:</h3>
-            <div class="weather-container"></div>
+        <section class="daily">
             <h3>Daily Forecast:</h3>
             <div class="forecast-weather-container"></div>
+        </section>
+
+        <section class="hourly">
+            <h3>3 Hour 5 Day Forecast:</h3>
+            <div class="weather-container"></div>
         </section>
 
     </main>

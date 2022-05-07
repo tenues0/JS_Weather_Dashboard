@@ -28,7 +28,7 @@ header {
     background-color: var(--darkblue);
     color: var(--light);
     background-image: linear-gradient(to right, var(--lightblue) , var(--darkblue));
-
+    float: none;
 }
 
 header h1 {
@@ -37,6 +37,19 @@ header h1 {
     padding: 5px;
 }
 
-aside h1 {
+.card {
+  float: left;
+}
+
+.card h1 {
   font-size: 24px;
+  padding: 10px;
+}
+
+section .input-group {
+  padding: 10px;
+}
+
+section .currentCity {
+  padding: 10px;
 }
