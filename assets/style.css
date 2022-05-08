@@ -95,4 +95,32 @@ section .forecast-weather-container {
 
 section .forecast-weather-container div {
   padding: 5px;
+  margin: 5px;
+  background-color: var(--darkblue);
+}
+
+section .forecast-weather-container div p {
+  padding: 2px;
+  color: var(--light);
+}
+
+section .hourly h3 {
+  margin: 5px;
+}
+
+section .weather-container {
+  margin: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+section .weather-container div {
+  padding: 5px;
+  margin: 5px;
+  background-color: var(--lightblue);
+}
+
+section .weather-container div p {
+  padding: 2px;
+  color: var(--light);
 }

@@ -42,7 +42,7 @@ var forecastWeatherData = function (APIKey) {
       obj.list.forEach(function (datum, i) {
         template +=`
           <div key=${i}>
-            <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
+            <p> ${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
             <p>Temp: ${datum.main.temp} F</p>
             <p>Wind: ${datum.wind.speed} MPH</p>
             <p>Humidity: ${datum.main.humidity} %</p>
@@ -142,7 +142,7 @@ var forecastWeatherDataHistBtn = function (cityButton) {
       object.list.forEach(function (datum, i) {
         template +=`
           <div key=${i}>
-            <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
+            <p> ${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
             <p>Temp: ${datum.main.temp} F</p>
             <p>Wind: ${datum.wind.speed} MPH</p>
             <p>Humidity: ${datum.main.humidity} %</p>
