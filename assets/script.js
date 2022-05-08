@@ -27,9 +27,9 @@ var forecastWeatherData = function (APIKey) {
       console.log(obj);
 
       // https://stackoverflow.com/questions/55882966/how-to-use-json-array-with-template-literal
-      document.getElementById("cityName").innerHTML = `${obj.city.name}`;
-      document.getElementById("lat").innerHTML = `Latitude ${obj.city.coord.lat}`;
-      document.getElementById("lon").innerHTML = `Longitude ${obj.city.coord.lon}`;
+      document.getElementById("cityName").innerHTML = `${obj.city.name} `;
+      document.getElementById("lat").innerHTML = `Latitude: ${obj.city.coord.lat}`;
+      document.getElementById("lon").innerHTML = `Longitude: ${obj.city.coord.lon}`;
 
       // getting the Lat and Lon coords and sending them into currentWeatherData function
       var latCoordinate = obj.city.coord.lat;
@@ -42,7 +42,7 @@ var forecastWeatherData = function (APIKey) {
       obj.list.forEach(function (datum, i) {
         template +=`
           <div key=${i}>
-            <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+            <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
             <p>Temp: ${datum.main.temp} F</p>
             <p>Wind: ${datum.wind.speed} MPH</p>
             <p>Humidity: ${datum.main.humidity} %</p>
@@ -74,7 +74,7 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
       document.getElementById("temp").innerHTML = `Temp: ${data.current.temp} F`;
       document.getElementById("wind").innerHTML = `Wind: ${data.current.wind_speed} MPH`;
       document.getElementById("humidity").innerHTML = `Humidity: ${data.current.humidity} %`;
-      document.getElementById("uvindex").innerHTML = `UV Index ${data.current.uvi}`;
+      document.getElementById("uvindex").innerHTML = `UV Index: <span>${data.current.uvi}</span>`;
 
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
@@ -101,7 +101,7 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
     five.daily.forEach(function (datum, i) {
       template +=`
         <div key=${i}>
-          <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+          <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
           <p>Temp: ${datum.temp.day} F</p>
           <p>Wind: ${datum.wind_speed} MPH</p>
           <p>Humidity: ${datum.humidity} %</p>
@@ -127,9 +127,9 @@ var forecastWeatherDataHistBtn = function (cityButton) {
     console.log(object);
 
       // https://stackoverflow.com/questions/55882966/how-to-use-json-array-with-template-literal
-      document.getElementById("cityName").innerHTML = `${object.city.name}`;
-      document.getElementById("lat").innerHTML = `Latitude ${object.city.coord.lat}`;
-      document.getElementById("lon").innerHTML = `Longitude ${object.city.coord.lon}`;
+      document.getElementById("cityName").innerHTML = `${object.city.name} `;
+      document.getElementById("lat").innerHTML = `Latitude: ${object.city.coord.lat}`;
+      document.getElementById("lon").innerHTML = `Longitude: ${object.city.coord.lon}`;
 
       // getting the Lat and Lon coords and sending them into currentWeatherData function
       var latCoordinate = object.city.coord.lat;
@@ -142,7 +142,7 @@ var forecastWeatherDataHistBtn = function (cityButton) {
       object.list.forEach(function (datum, i) {
         template +=`
           <div key=${i}>
-            <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+            <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
             <p>Temp: ${datum.main.temp} F</p>
             <p>Wind: ${datum.wind.speed} MPH</p>
             <p>Humidity: ${datum.main.humidity} %</p>
@@ -174,7 +174,7 @@ var currentWeatherDataHistBtn = function (APIKey, latCoordinate, lonCoordinate) 
       document.getElementById("temp").innerHTML = `Temp: ${data.current.temp} F`;
       document.getElementById("wind").innerHTML = `Wind: ${data.current.wind_speed} MPH`;
       document.getElementById("humidity").innerHTML = `Humidity: ${data.current.humidity} %`;
-      document.getElementById("uvindex").innerHTML = `UV Index ${data.current.uvi}`;
+      document.getElementById("uvindex").innerHTML = `UV Index: <span>${data.current.uvi}</span>`;
 
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherDataHistBtn failure!");
@@ -201,7 +201,7 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
     five.daily.forEach(function (datum, i) {
       template +=`
         <div key=${i}>
-          <p>${new Date(datum.dt * 1000).toLocaleString("en-US")}</p>
+          <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
           <p>Temp: ${datum.temp.day} F</p>
           <p>Wind: ${datum.wind_speed} MPH</p>
           <p>Humidity: ${datum.humidity} %</p>

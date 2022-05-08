@@ -4,6 +4,8 @@
     --light: #ecf0f1;
     --darkblue: #2c3e50;
     --red: #e74c3c;
+    --black: #433852;
+    --green: #0fdc0f;
   }
   
 body {
@@ -50,6 +52,47 @@ section .input-group {
   padding: 10px;
 }
 
+.weatherCard {
+  display: flex;
+  flex-direction: column;
+}
+
 section .currentCity {
   padding: 10px;
+  border: var(--black);
+  border-style: solid;
+  margin: 5px;
+}
+
+section .currentCity div {
+  padding: 5px;
+  font-weight: bold;
+}
+
+#cityName {
+  float: left;
+  font-size: 24px;
+}
+
+#date {
+  font-size: 24px;
+}
+
+#uvindex span{
+  background-color: var(--green);
+  color: var(--light);
+}
+
+section .daily h3 {
+  margin: 5px;
+}
+
+section .forecast-weather-container {
+  margin: 5px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+section .forecast-weather-container div {
+  padding: 5px;
 }
