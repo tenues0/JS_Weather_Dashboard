@@ -85,6 +85,7 @@ section .currentCity div {
 #uvindex span{
   background-color: var(--green);
   color: var(--light);
+  padding: 5px;
 }
 
 section .daily h3 {
