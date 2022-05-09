@@ -79,7 +79,7 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
       document.getElementById("uvindex").innerHTML = `UV Index: <span>${data.current.uvi}</span>`;
 
       var iconInfo = `${data.current.weather[0].icon}`;
-      return fetch("http://openweathermap.org/img/wn/" + iconInfo + "@2x.png");
+      return fetch("https://openweathermap.org/img/wn/" + iconInfo + "@2x.png");
     }).then(function (res) {
       return res;
     }). then(function (picture) {
@@ -109,7 +109,7 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
     // output the daily forecast
     var template = "";
     five.daily.forEach(function (datum, i) {
-      icon = "http://openweathermap.org/img/wn/" + datum.weather[0].icon + ".png"
+      icon = "https://openweathermap.org/img/wn/" + datum.weather[0].icon + ".png"
       template +=`
         <div key=${i}>
           <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
@@ -220,7 +220,7 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
     // output the daily forecast
     var template = "";
     five.daily.forEach(function (datum, i) {
-      icon = "http://openweathermap.org/img/wn/" + datum.weather[0].icon + ".png"
+      icon = "https://openweathermap.org/img/wn/" + datum.weather[0].icon + ".png"
       template +=`
         <div key=${i}>
           <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
