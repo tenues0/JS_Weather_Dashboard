@@ -69,8 +69,6 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
     }).then(function (data) {
       console.log(data);
 
-
-
       // Using template literals to display data from JSON
       document.getElementById("date").innerHTML = `${new Date(data.current.dt * 1000).toLocaleDateString("en-US")}`;
       document.getElementById("temp").innerHTML = `Temp: ${data.current.temp} F`;
@@ -78,21 +76,40 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
       document.getElementById("humidity").innerHTML = `Humidity: ${data.current.humidity} %`;
       document.getElementById("uvindex").innerHTML = `UV Index: <span>${data.current.uvi}</span>`;
 
-      // var iconSymbol = `${data.current.weather[0].icon}`;
-      // fetch("http://openweathermap.org/img/wn/" + iconSymbol + ".png")
-      //   .then(function (response) {
-      //     return response.json();
-      //   }).then(function (picture) {
-      //     console.log(picture);
-      //   })
-      // document.getElementById("dayIcon").innerHTML = icon;
-
+      // getting info for icon
+      var iconSymbol = `${data.current.weather[0].icon}`;
+      return fetch("http://openweathermap.org/img/wn/" + iconSymbol + ".png");
+    }).then(function (res) {
+      return res;
+    }). then(function (picture) {
+      console.log(picture);
+      document.getElementById("dayIcon").innerHTML = `${picture.url}`;
+       
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
       console.error(error);
     });
 };
 
+// function for icon symbol
+// var iconURL = "http://openweathermap.org/img/wn/" + iconSymbol + ".png";
+// iconFunction
+// var iconFunction = function (iconSymbol) {
+//   var iconURL = "http://openweathermap.org/img/wn/" + iconSymbol + ".png";
+
+//   fetch(iconURL)
+//   .then(function (response) {
+//     return response;
+//   }).then(function (picture) {
+//     console.log(picture);
+
+//     document.getElementById("dayIcon").innerHTML = `${picture.url}`;
+
+//   }).catch(function (error) {
+//     console.error("Emotional Damage! iconFunction failure!");
+//     console.error(error);
+//   });
+// };
 
 var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
   console.log("lat coord within onecall API ", latCoordinate);
