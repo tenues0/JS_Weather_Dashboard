@@ -103,15 +103,17 @@ var fiveDayForecast = function (APIKey, latCoordinate, lonCoordinate) {
     return response.json();
   }).then(function (five) {
     console.log("The five day forecast from onecall");
-    console.log(five);
+    console.log("five ",five);
 
     // Using template literals to display data from JSON
     // output the daily forecast
     var template = "";
     five.daily.forEach(function (datum, i) {
+      icon = "http://openweathermap.org/img/wn/" + datum.weather[0].icon + ".png"
       template +=`
         <div key=${i}>
           <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
+          <img src=${icon} />
           <p>Temp: ${datum.temp.day} F</p>
           <p>Wind: ${datum.wind_speed} MPH</p>
           <p>Humidity: ${datum.humidity} %</p>
@@ -218,9 +220,11 @@ var fiveDayForecastHistBtn = function (APIKey, latCoordinate, lonCoordinate) {
     // output the daily forecast
     var template = "";
     five.daily.forEach(function (datum, i) {
+      icon = "http://openweathermap.org/img/wn/" + datum.weather[0].icon + ".png"
       template +=`
         <div key=${i}>
           <p> ${new Date(datum.dt * 1000).toLocaleDateString("en-US")}</p>
+          <img src=${icon} />
           <p>Temp: ${datum.temp.day} F</p>
           <p>Wind: ${datum.wind_speed} MPH</p>
           <p>Humidity: ${datum.humidity} %</p>
