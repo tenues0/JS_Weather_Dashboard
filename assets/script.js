@@ -69,12 +69,23 @@ var currentWeatherData = function (APIKey, latCoordinate, lonCoordinate) {
     }).then(function (data) {
       console.log(data);
 
+
+
       // Using template literals to display data from JSON
       document.getElementById("date").innerHTML = `${new Date(data.current.dt * 1000).toLocaleDateString("en-US")}`;
       document.getElementById("temp").innerHTML = `Temp: ${data.current.temp} F`;
       document.getElementById("wind").innerHTML = `Wind: ${data.current.wind_speed} MPH`;
       document.getElementById("humidity").innerHTML = `Humidity: ${data.current.humidity} %`;
       document.getElementById("uvindex").innerHTML = `UV Index: <span>${data.current.uvi}</span>`;
+
+      // var iconSymbol = `${data.current.weather[0].icon}`;
+      // fetch("http://openweathermap.org/img/wn/" + iconSymbol + ".png")
+      //   .then(function (response) {
+      //     return response.json();
+      //   }).then(function (picture) {
+      //     console.log(picture);
+      //   })
+      // document.getElementById("dayIcon").innerHTML = icon;
 
     }).catch(function (error) {
       console.error("Emotional Damage! currentWeatherData failure!");
