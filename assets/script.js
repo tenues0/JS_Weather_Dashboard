@@ -190,7 +190,7 @@ var currentWeatherDataHistBtn = function (APIKey, latCoordinate, lonCoordinate) 
 
       // getting info for icon
       var iconInfo = `${data.current.weather[0].icon}`;
-      return fetch("http://openweathermap.org/img/wn/" + iconInfo + "@2x.png");
+      return fetch("https://openweathermap.org/img/wn/" + iconInfo + "@2x.png");
     }).then(function (res) {
       return res;
     }). then(function (picture) {
