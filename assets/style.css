@@ -52,6 +52,20 @@ section .input-group {
   padding: 10px;
 }
 
+#submit {
+  display: flex;
+  width: 150px;
+  margin: auto;
+  text-align: center;
+}
+
+#inputHistory {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  margin: auto;
+}
+
 .weatherCard {
   display: flex;
   flex-direction: column;
